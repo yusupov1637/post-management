@@ -55,4 +55,16 @@ public class ContactService {
         contactDTO.setPhoneNum(contact.getPhoneNum());
         return ResponseEntity.ok(contactDTO);
     }
+    public ResponseEntity<?> update(Long id,ContactDTO contactDTO){
+        Optional<Contact> byId = contactRepository.findById(id);
+        if (!byId.isPresent()){
+            return ResponseEntity.badRequest().body(HttpStatus.NOT_FOUND);
+        }
+        Contact contact = byId.get();
+        contact.setId(id);
+        contact.setPhoneNum(contactDTO.getPhoneNum());
+
+        contactRepository.save(contact);
+        return ResponseEntity.ok(HttpStatus.ACCEPTED);
+    }
 }

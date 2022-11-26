@@ -16,7 +16,7 @@ public class ContactController {
     ContactService contactService;
 
     @PostMapping
-    public ResponseEntity<?> createContact(@RequestBody ContactDTO contactDTO){
+    public ResponseEntity<?> createContact(@RequestBody ContactDTO contactDTO) {
         return contactService.createContact(contactDTO);
     }
 
@@ -27,16 +27,22 @@ public class ContactController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteById(@PathVariable Long id){
+    public ResponseEntity<?> deleteById(@PathVariable Long id) {
         try {
             contactService.deleteById(id);
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok("Deleted");
     }
+
     @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable Long id){
+    public ResponseEntity<?> getById(@PathVariable Long id) {
         return contactService.getById(id);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody ContactDTO contactDTO) {
+        return contactService.update(id, contactDTO);
     }
 }
