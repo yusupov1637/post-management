@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/profile")
 public class ProfileController {
@@ -25,5 +27,15 @@ public class ProfileController {
     public ResponseEntity<Page<Profile>> getList(@RequestParam("page") int page,
                                                  @RequestParam("size") int size) {
         return ResponseEntity.ok(profileService.getAllProfile(page, size));
+    }
+
+    @GetMapping("/contact/{id}")
+    public ResponseEntity<?> getProfileByContactId(@PathVariable Long id){
+        ProfileDTO profileByContactId = profileService.getProfileByContactId(id);
+        return ResponseEntity.ok(profileByContactId);
+    }
+    @GetMapping("/{id}")
+    public List<ProfileDTO> getNamePhone(@PathVariable Long id){
+       return profileService.getProfileNAmeAndPhone(id);
     }
 }
