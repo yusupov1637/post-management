@@ -20,7 +20,7 @@ public class Profile {
     @Column
     private String surname;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "contact_id")
     private Contact contact;
 

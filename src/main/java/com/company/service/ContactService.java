@@ -4,10 +4,7 @@ import com.company.dto.ContactDTO;
 import com.company.entity.Contact;
 import com.company.repository.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -29,7 +26,8 @@ public class ContactService {
     }
 
     public Page<Contact> getAllContact(int page, int size) {
-        Pageable paging = PageRequest.of(page, size);
+        Sort sort=Sort.by(Sort.Direction.ASC,"id");
+        Pageable paging = PageRequest.of(page, size,sort);
         Page<Contact> pageObj = contactRepository.findAll(paging);
 
         List<Contact> list = pageObj.getContent();
@@ -66,5 +64,17 @@ public class ContactService {
 
         contactRepository.save(contact);
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
+    }
+    public ContactDTO entityDto(Contact contact){
+        ContactDTO contactDTO=new ContactDTO();
+        contactDTO.setId(contact.getId());
+        contactDTO.setPhoneNum(contact.getPhoneNum());
+        return contactDTO;
+    }
+
+    public Contact dtoToEntity(ContactDTO contactDTO){
+        Contact contact=new Contact();
+        contact.setPhoneNum(contactDTO.getPhoneNum());
+        return contact;
     }
 }

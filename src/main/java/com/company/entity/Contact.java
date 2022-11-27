@@ -16,4 +16,12 @@ public class Contact {
 
     @Column
     private String phoneNum;
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "id=" + id +
+                ", phoneNum='" + phoneNum + '\'' +
+                '}';
+    }
 }

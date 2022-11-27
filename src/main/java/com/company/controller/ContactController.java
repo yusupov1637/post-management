@@ -3,6 +3,7 @@ package com.company.controller;
 import com.company.dto.ContactDTO;
 import com.company.entity.Contact;
 import com.company.service.ContactService;
+import com.company.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.*;
 public class ContactController {
     @Autowired
     ContactService contactService;
+
+    @Autowired
+    ProfileService profileService;
 
     @PostMapping
     public ResponseEntity<?> createContact(@RequestBody ContactDTO contactDTO) {
@@ -44,5 +48,10 @@ public class ContactController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody ContactDTO contactDTO) {
         return contactService.update(id, contactDTO);
+    }
+
+    @GetMapping("/profile/{id}")
+    public ContactDTO getContactByProfielID(@PathVariable Long id){
+        return profileService.getContactByProfileId(id);
     }
 }
