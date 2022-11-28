@@ -10,6 +10,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post,Long> {
@@ -31,4 +33,10 @@ public interface PostRepository extends JpaRepository<Post,Long> {
 
     @Query(value = "select count(*) from Post p where p.profile_id=?1",nativeQuery = true)
     Integer getCount(Long id);
+
+    List<Post> findByCreatedDate(LocalDate createdDate);
+
+/*
+    @Query(value = "FROM Post p where p.=:createdDate")
+    List<Post> findPostByCreatedDateToday(@Param("createdDate") LocalDate today);*/
 }

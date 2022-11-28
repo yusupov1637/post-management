@@ -15,5 +15,5 @@ public class PostDTO {
     private String title;
     private String content;
     private LocalDateTime createdDate;
-    private Profile profile;
+    private ProfileDTO profileDTO;
 }

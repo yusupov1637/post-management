@@ -12,6 +12,7 @@ import org.springframework.data.domain.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +24,9 @@ public class PostService {
 
     @Autowired
     ProfileRepository profileRepository;
+
+   @Autowired
+   private ProfileService profileService;
 
     public ResponseEntity<?> createPost(PostDTO postDTO) {
         Post post = dtoToEntity(postDTO);
@@ -69,12 +73,21 @@ public class PostService {
         Integer count = postRepository.getCount(profile_id);
         return count;
     }
+    public List<PostDTO> getTodaysPosts(LocalDate today){
+        List<Post> postByCreatedDateToday = postRepository.findByCreatedDate(today);
+        List<PostDTO> postDTOList=new ArrayList<>();
+        for (Post post : postByCreatedDateToday) {
+            PostDTO postDTO = entityDot(post);
+            postDTOList.add(postDTO);
+        }
+        return postDTOList;
+    }
 
     public Post dtoToEntity(PostDTO postDTO) {
         Post post = new Post();
         post.setContent(postDTO.getContent());
         post.setTitle(postDTO.getTitle());
-        post.setProfile(postDTO.getProfile());
+        post.setProfile(profileService.dtoToEntity(postDTO.getProfileDTO()));
         post.setCreatedDate(LocalDateTime.now());
         return post;
     }
@@ -84,7 +97,7 @@ public class PostService {
         postDTO.setId(post.getId());
         postDTO.setContent(post.getContent());
         postDTO.setTitle(post.getTitle());
-        postDTO.setProfile(post.getProfile());
+        postDTO.setProfileDTO(profileService.entityDto(post.getProfile()));
         postDTO.setCreatedDate(post.getCreatedDate());
         return postDTO;
     }

@@ -73,7 +73,7 @@ public class ProfileService {
             profileDTO.setName(entity.getName());
             Contact contact=new Contact();
             contact.setPhoneNum(entity.getPhone());
-            profileDTO.setContact(contact);
+            profileDTO.setContactDTO(contactService.entityDto(contact));
             profileDTOList.add(profileDTO);
         });
         return profileDTOList;
@@ -90,7 +90,7 @@ public class ProfileService {
         profileDTO.setId(profile.getId());
         profileDTO.setName(profile.getName());
         profileDTO.setSurname(profile.getSurname());
-        profileDTO.setContact(profile.getContact());
+        profileDTO.setContactDTO(contactService.entityDto(profile.getContact()));
         return profileDTO;
     }
 
@@ -98,7 +98,7 @@ public class ProfileService {
         Profile profile = new Profile();
         profile.setName(profileDTO.getName());
         profile.setSurname(profileDTO.getSurname());
-        profile.setContact(profileDTO.getContact());
+        profile.setContact(contactService.dtoToEntity(profileDTO.getContactDTO()));
         return profile;
     }
 }

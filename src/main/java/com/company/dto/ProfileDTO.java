@@ -15,5 +15,5 @@ public class ProfileDTO {
     private Long id;
     private String name;
     private String surname;
-    private Contact contact;
+    private ContactDTO contactDTO;
 }

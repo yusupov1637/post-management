@@ -11,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 
@@ -57,6 +59,10 @@ public class PostController {
         Integer countPostProfile = postService.getCountPostProfile(profile_id);
         return ResponseEntity.ok(countPostProfile);
 
+    }
+    @GetMapping("/todays")
+    public List<PostDTO> getTodays(){
+       return postService.getTodaysPosts(LocalDate.now());
     }
 
 }

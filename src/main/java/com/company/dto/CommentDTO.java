@@ -16,7 +16,8 @@ import java.time.LocalDateTime;
 public class CommentDTO {
     private Long id;
     private String content;
-    private Post post;
-    private Profile profile;
+    private PostDTO post;
+    private ProfileDTO profile;
     private LocalDateTime createdDate;
+
 }
