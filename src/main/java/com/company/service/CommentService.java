@@ -7,7 +7,9 @@ import com.company.dto.ProfileDTO;
 import com.company.entity.Comment;
 import com.company.entity.Post;
 import com.company.entity.Profile;
+import com.company.mapper.ProfileCommentMapper;
 import com.company.repository.CommentRepository;
+import com.company.repository.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,9 @@ import java.util.List;
 public class CommentService {
     @Autowired
     private CommentRepository commentRepository;
+
+    @Autowired
+    private ProfileRepository profileRepository;
 
     @Autowired
     private ProfileService profileService;
@@ -65,6 +70,32 @@ public class CommentService {
             commentDTOList.add(dto);
         }
         return commentDTOList;
+    }
+
+    public List<CommentDTO> getCommentListByProfileId(Long profile_id){
+        List<Comment> commentListByPostId = commentRepository.getCommentListByProfileId(profile_id);
+        List<CommentDTO> commentDTOList=new ArrayList<>();
+        for (Comment comment : commentListByPostId) {
+            CommentDTO dto = entityDto(comment);
+            commentDTOList.add(dto);
+        }
+        return commentDTOList;
+    }
+    public List<ProfileCommentMapper> getProfileAndComment(Long profileId){
+       return commentRepository.getProfileAndComment(profileId);
+    }
+    public ProfileDTO getProfile(Long cId){
+        Profile profileByComment = profileRepository.findProfileByComment(cId);
+        ProfileDTO profileDTO = profileService.entityDto(profileByComment);
+        return profileDTO;
+    }
+    public Integer getCount(Long postId){
+       return commentRepository.countByPostId(postId);
+    }
+    public CommentDTO getLast1(Long postId){
+        Comment comment = commentRepository.findlast1Comment(postId);
+        CommentDTO dto = entityDto(comment);
+        return dto;
     }
 
     public CommentDTO entityDto(Comment comment) {

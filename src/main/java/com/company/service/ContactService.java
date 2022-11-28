@@ -61,7 +61,6 @@ public class ContactService {
         Contact contact = byId.get();
         contact.setId(id);
         contact.setPhoneNum(contactDTO.getPhoneNum());
-
         contactRepository.save(contact);
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
@@ -71,7 +70,6 @@ public class ContactService {
         contactDTO.setPhoneNum(contact.getPhoneNum());
         return contactDTO;
     }
-
     public Contact dtoToEntity(ContactDTO contactDTO){
         Contact contact=new Contact();
         contact.setPhoneNum(contactDTO.getPhoneNum());

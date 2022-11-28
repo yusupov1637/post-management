@@ -31,4 +31,7 @@ public interface ProfileRepository extends JpaRepository<Profile,Long> {
 
     @Query(value = "select p.* from Profile p inner join  Post ps on ps.profile_id = p.id where p.id=:pId order by ps.created_date DESC limit 5", nativeQuery = true)
     List<Profile> findlast5PostsProfile(@Param("pId") Long pId);
+
+    @Query(value = "select p.* from Profile p inner join Comment c on p.id=c.profile_id where c.id=:cId",nativeQuery = true)
+    Profile findProfileByComment(@Param("cId") Long cId);
 }
