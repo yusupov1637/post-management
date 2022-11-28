@@ -29,5 +29,8 @@ public class Post {
     @JoinColumn(name = "profile_id")
     private Profile profile;
 
-
+    public Post(String title,LocalDateTime createdDate) {
+        this.title = title;
+        this.createdDate = createdDate;
+    }
 }

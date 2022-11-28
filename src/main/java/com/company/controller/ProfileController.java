@@ -38,4 +38,9 @@ public class ProfileController {
     public List<ProfileDTO> getNamePhone(@PathVariable Long id){
        return profileService.getProfileNAmeAndPhone(id);
     }
+
+    @GetMapping("/post_id/{id}")
+    public ProfileDTO getProfileByPostId(@PathVariable Long id){
+        return profileService.getProfileByPostID(id);
+    }
 }

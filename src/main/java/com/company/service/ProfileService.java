@@ -79,6 +79,11 @@ public class ProfileService {
         return profileDTOList;
     }
 
+    public ProfileDTO getProfileByPostID(Long post_id){
+        Profile profileByPost_id = profileRepository.getProfileByPost_id(post_id);
+        ProfileDTO profileDTO = entityDto(profileByPost_id);
+        return profileDTO;
+    }
 
     public ProfileDTO entityDto(Profile profile) {
         ProfileDTO profileDTO = new ProfileDTO();

@@ -24,4 +24,11 @@ public interface ProfileRepository extends JpaRepository<Profile,Long> {
 
     @Query("select new com.company.mapper.ProfileMapper(p.id,p.name,c.phoneNum) from Profile p inner join Contact c where c.id=:cId")
     List<ProfileMapper> findByContactId(@Param("cId") Long contactId);
+
+    //    5. Get profile by post id
+    @Query("from Profile p inner join Post ps where ps.id=:psId")
+    Profile getProfileByPost_id(@Param("psId")Long psId);
+
+    @Query(value = "select p.* from Profile p inner join  Post ps on ps.profile_id = p.id where p.id=:pId order by ps.created_date DESC limit 5", nativeQuery = true)
+    List<Profile> findlast5PostsProfile(@Param("pId") Long pId);
 }
