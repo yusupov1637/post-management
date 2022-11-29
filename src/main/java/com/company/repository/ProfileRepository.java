@@ -4,12 +4,23 @@ import com.company.entity.Contact;
 import com.company.entity.Profile;
 import com.company.mapper.ProfileMapper;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 public interface ProfileRepository extends JpaRepository<Profile,Long> {
+    @Transactional
+    void deleteById(Long id);
+
+
+    @Modifying
+    @Transactional
+    @Query("update Profile set name=:name,surname=:surname where id=:id")
+    Profile updateProfile(@Param("name")String name,@Param("surname")String surname,@Param("id")Long id);
+
     @Query("from Contact inner join Profile p where p.id=:pid")
     Contact findContactByProfileId(@Param("pid") Long pid);
 
